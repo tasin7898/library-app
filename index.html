@@ -11,7 +11,7 @@
     <h1>Add to your book Library</h1>
   </header>
   
-  <div class="card-container">
+  <div class="card-container hidden">
     
   </div>
 
@@ -31,8 +31,10 @@
         <input type="number" name="page-count" id="page-count" required>
         <label for="genre">Genre</label>
         <input type="text" name="genre" id="genre" required>
+        <div>
         <input type="checkbox" name="read" id="read-checkbox">
         <label for="read-checkbox">I Have Read It Already</label>
+        </div>
       </fieldset>
       <button id="add-btn" value="add" type="submit">Add</button>
     </form>

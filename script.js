@@ -31,7 +31,10 @@ function Book ({title = "", author= "", pageCount = "", genre = "", isRead = fal
   this.isRead = isRead;
   this.uniqueID = crypto.randomUUID();
 
+
 }
+
+
 
 const addBookToLibrary = ({title, author, pageCount, genre, isRead}= {}) => {
   const newBook = new Book(getFormValues());
@@ -52,16 +55,19 @@ const displayBookCards = () => {
     </div>
     `
   ).join("");
+  el.bookCard.classList.remove("hidden");
 }
 const updateLibrary = (id) => {
   libraryArray =  libraryArray.filter(({uniqueID}) => uniqueID !== id);
   return libraryArray;
 
 }
-const updateReadButton = (id, bool) => {
+const updateReadButton = (e, id, bool) => {
   const targetBook = libraryArray.find(key => key.uniqueID === id);
   
   targetBook.isRead = bool;
+  targetBook.isRead? e.target.classList.remove("btn-background-notRead"): e.target.classList.add("btn-background-notRead");
+  displayBookCards();
 }
 
 const clearForm = () => {
@@ -82,6 +88,11 @@ const getFormValues = () => ({
 
 el.button.addBtn.addEventListener("click", (e) => {
   if(!el.form.checkValidity()) return;
+  if([...Object.values(getFormValues())].some(item => item === "")) {
+    e.preventDefault();
+    alert("Please fill out all required fields before submitting.");
+    return;
+  }
   e.preventDefault();
   
    
@@ -103,12 +114,12 @@ const renderConfirmDialog = e => {
       clearForm();
       el.confirmDialog.close();
       el.dialog.close();
-      console.log("ggs");
+      //console.log("ggs");
     }
     if(e.target.value === "cancel"){
       el.confirmDialog.close();
       //el.dialog.close();
-      console.log("ZAZA");
+      //console.log("ZAZA");
     }
   } 
 }
@@ -121,19 +132,20 @@ el.bookCard.addEventListener("click", (e) => {
       updateLibrary(card.id);
       card.classList.add("hidden");
       displayBookCards();
+      el.bookCard.classList.add("hidden");
     }
     else if(e.target.value === "read"){
       if(e.target.textContent === "Marked As Read"){
-        updateReadButton(card.id, false);
-        e.target.textContent = "Not Yet Read"
-        e.target.classList.add("btn-background-notRead");
-        console.log("ggs");
+        updateReadButton(e, card.id, false);
+        
+        //e.target.classList.add("btn-background-notRead");
+        //console.log("ggs");
       }
       else{
-        updateReadButton(card.id, true)
-      e.target.textContent = "Read"
-      e.target.classList.remove("btn-background-notRead");
-      console.log("haha");
+        updateReadButton(e, card.id, true)
+      //e.target.textContent = "Read"
+      //e.target.classList.remove("btn-background-notRead");
+      //console.log("haha");
       }
       displayBookCards();
     }
@@ -147,7 +159,7 @@ el.button.addBookBtn.addEventListener("click", (e) => {
 })
 
 document.addEventListener("click", () => {
-  if(el.dialog.open) el.confirmDialog.showModal();
+  if(el.dialog.open) [...Object.values(getFormValues())].some(item => !!item)? el.confirmDialog.showModal() : el.dialog.close();
 });
 
 el.form.addEventListener("click", (e) => e.stopPropagation());
