@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="header">
+    <h1>Add to your book Library</h1>
+  </header>
+  
+  <div class="card-container">
+    
+  </div>
+
+  <div class="add-Button">
+    <button type="button" value="addBook" id="add-book">Add a Book</button>
+  </div>
+  <dialog class="container">
+    <form id ="form" action="#" method="post">
+      <button type="button" value="close" id="close">X</button>
+      <fieldset>
+        <legend>Add New Book</legend>
+        <label for="title">Title</label>
+        <input type="text" name="title" id="title" required>
+        <label for="author">Author</label>
+        <input type="text" name="author" id="author" required>
+        <label for="pages">Page Count</label>
+        <input type="number" name="page-count" id="page-count" required>
+        <label for="genre">Genre</label>
+        <input type="text" name="genre" id="genre" required>
+        <input type="checkbox" name="read" id="read-checkbox">
+        <label for="read-checkbox">I Have Read It Already</label>
+      </fieldset>
+      <button id="add-btn" value="add" type="submit">Add</button>
+    </form>
+  </dialog>
+  <dialog class="close-confirm">
+    <div class="prompt">
+      <div>You have unsaved changes. What would you like to do?</div>
+    </div>
+    <button class="save" type="button" value="save">Save</button>
+    <button class="discard" type="button" value="discard">Discard</button>
+    <button class="cancel" type="button" value="cancel">Cancel</button>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
