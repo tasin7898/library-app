@@ -46,11 +46,11 @@ const displayBookCards = () => {
   el.bookCard.innerHTML = libraryArray.map(({title, author, pageCount, genre, isRead, uniqueID}) => 
      `
     <div class="book-card" id="${uniqueID}">
-      <h4>Title: ${title}</h4>
+      <h3>Title: ${title}</h3>
       <p>Author: ${author}</p>
       <p>Pages: ${pageCount}</p>
       <p>Genre: ${genre}</p>
-      <button type="button" value="read">${isRead? "Marked As Read" : "Not Read Yet"}</button>
+      <button class="${isRead ? "" : "btn-background-notRead"}" type="button" value="read">${isRead? "Marked As Read" : "Not Read Yet"}</button>
       <button type="button" value="remove">Remove Book</button>
     </div>
     `
@@ -62,12 +62,12 @@ const updateLibrary = (id) => {
   return libraryArray;
 
 }
-const updateReadButton = (e, id, bool) => {
+const updateReadButton = (id) => {
   const targetBook = libraryArray.find(key => key.uniqueID === id);
   
-  targetBook.isRead = bool;
-  targetBook.isRead? e.target.classList.remove("btn-background-notRead"): e.target.classList.add("btn-background-notRead");
-  displayBookCards();
+  targetBook.isRead = !targetBook.isRead;
+ 
+  //displayBookCards();
 }
 
 const clearForm = () => {
@@ -83,22 +83,6 @@ const getFormValues = () => ({
   pageCount: el.input.pageCountInput.value.trim(),
   genre : el.input.genreInput.value.trim(),
   isRead : el.input.readBtnForm.checked,
-});
-
-
-el.button.addBtn.addEventListener("click", (e) => {
-  if(!el.form.checkValidity()) return;
-  if([...Object.values(getFormValues())].some(item => item === "")) {
-    e.preventDefault();
-    alert("Please fill out all required fields before submitting.");
-    return;
-  }
-  e.preventDefault();
-  
-   
-  addBookToLibrary();
-  clearForm();
-  el.dialog.close();
 });
 
 const renderConfirmDialog = e => {
@@ -124,6 +108,23 @@ const renderConfirmDialog = e => {
   } 
 }
 
+el.button.addBtn.addEventListener("click", (e) => {
+  if(!el.form.checkValidity()) return;
+  if([...Object.values(getFormValues())].some(item => item === "")) {
+    e.preventDefault();
+    alert("Please fill out all required fields before submitting.");
+    return;
+  }
+  e.preventDefault();
+  
+   
+  addBookToLibrary();
+  clearForm();
+  el.dialog.close();
+});
+
+
+
 el.bookCard.addEventListener("click", (e) => {
 
   if(e.target.tagName === "BUTTON") {
@@ -135,18 +136,11 @@ el.bookCard.addEventListener("click", (e) => {
       el.bookCard.classList.add("hidden");
     }
     else if(e.target.value === "read"){
-      if(e.target.textContent === "Marked As Read"){
-        updateReadButton(e, card.id, false);
-        
-        //e.target.classList.add("btn-background-notRead");
-        //console.log("ggs");
-      }
-      else{
-        updateReadButton(e, card.id, true)
+      
+      updateReadButton(card.id)
       //e.target.textContent = "Read"
       //e.target.classList.remove("btn-background-notRead");
       //console.log("haha");
-      }
       displayBookCards();
     }
   }

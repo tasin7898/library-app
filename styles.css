@@ -16,7 +16,7 @@
   box-sizing: border-box;
 }
 
-Button {
+button {
   background-color: var(--addBook-btn-color);
   border: none;
   border-radius: var(--border-radius);
@@ -88,8 +88,8 @@ input{
   flex-wrap: wrap;
   align-items: center;
   gap: 6rem;
-  border: 2px solid transparent;
-  background-color: var(--card-bg-color);
+ 
+  background-color: whitesmoke;
   color: white;
   padding: 0.7rem;
   font-size: 1rem;
@@ -101,12 +101,24 @@ input{
   padding: 1rem;
   border-radius: 0.5rem;
   color: white;
+  
+}
+h3 {
+ margin-left: .3rem;
 }
 
 .card-container button {
-  margin-bottom: .3rem;
+  margin-top: .6rem;
+  padding: .5rem .8rem;
+}
+p {
+  margin: .9rem 0;
+  margin-left: .3rem;
 }
 
+.card-container button {
+  margin: .3rem 0;;
+}
 legend {
   font-size: 1.1rem;
   font-weight: 550;
@@ -116,5 +128,5 @@ legend {
 }
 
 .btn-background-notRead {
-  background-color: orangered;
+  background-color: yellow;
 }
